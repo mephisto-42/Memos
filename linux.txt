@@ -24,7 +24,7 @@ _ Commandes de base
   |-> Gestion des fichiers		   |   pwd, ls, cd, mv, cp, rm, mkdir, ln								    |
   |-> Recherche de fichier		   |   locate, find											    |
   |-> Affichage des fichiers		   |   cat, tac, more, less, head, tail									    |
-  |-> Traitement des chaines de caractere  |   grep, sed, cut, awk										    |
+  |-> Traitement des chaines de caractere  |   grep, sed, cut, awk, sort, uniq										    |
   |-> Gestion des droits		   |   chmod, chown, chgrp, sudo, visudo, su								    |
   |-> Install et download	   	   |   apt-get, wget											    |
   |-> Processus & ram			   |   kill, killall, ps, top, free									    |
@@ -435,6 +435,12 @@ awk '{print $1}'		Affiche la premiere colone
 ls -l | awk '{print $1}'	Affiche la premiere colone de la commande ls (uniquement les droits utilisateur ex: drwxr-xr-x)
 awk 'NR == 17'			Affiche la 17eme ligne
 awk 'NR >= 10 && NR <= 30'	Affiche les lignes de 10 à 30
+
+
+	SORT : trie
+
+	UNIQ : retire les doublons (si trié)
+
 
 
 
