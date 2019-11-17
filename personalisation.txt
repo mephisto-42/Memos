@@ -1,0 +1,9 @@
+###Man en couleur###
+apt-get install most
+echo 'export MANPAGER="/usr/bin/most -s"' >> ~/.bashrc
+ OU
+update-alternatives --config pager
+
+
+###Man en francais###
+export LANG=fr_FR.utf8

@@ -1,0 +1,608 @@
+
+				██╗     ██╗███╗   ██╗██╗   ██╗██╗  ██╗
+				██║     ██║████╗  ██║██║   ██║╚██╗██╔╝
+				██║     ██║██╔██╗ ██║██║   ██║ ╚███╔╝ 
+				██║     ██║██║╚██╗██║██║   ██║ ██╔██╗ 
+				███████╗██║██║ ╚████║╚██████╔╝██╔╝ ██╗
+				╚══════╝╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═╝
+
+------------
+| SOMMAIRE |
+------------
+
+_ Définitions
+_ Fichiers
+_ Répertoires
+_ Raccourcis
+_ Arrière plan
+_ Redirection de flux
+_ Commande dans une commande
+_ Multi commandes (à la suite)
+_ Commandes de base
+ \					    /------------------------------------------------------------------------------------------------------\
+  |-> Info commandes			   |   man, which										 	    |
+  |-> Gestion des fichiers		   |   pwd, ls, cd, mv, cp, rm, mkdir, ln								    |
+  |-> Recherche de fichier		   |   locate, find											    |
+  |-> Affichage des fichiers		   |   cat, tac, more, less, head, tail									    |
+  |-> Traitement des chaines de caractere  |   grep, sed, cut, awk										    |
+  |-> Gestion des droits		   |   chmod, chown, chgrp, sudo, visudo, su								    |
+  |-> Install et download	   	   |   apt-get, wget											    |
+  |-> Processus & ram			   |   kill, killall, ps, top, free									    |
+  |-> Info kernel			   |   uname, lsb_name											    |
+  |-> Users & groups			   |   id, whoami, groups, add/del <-> user/group, usermod, passwd					    |
+  |-> Périphériques			   |   lspci, lsusb, lshw										    |
+  |-> Réseaux				   |   ifconfig, iwconfig, netstat, netdiscover, nslookup, dig, ss, tcpdump, ping, traceroute, dhclient     |
+  |-> Partitions			   |   mount, umount											    |
+  |-> Fichiers				   |   file, diff, strings, readelf, objdump, gdb, wc							    |
+  |-> Taille dossier/disque		   |   du, df												    |
+  |-> Divers				   |   export, crontab, vim, date										    |
+					    \------------------------------------------------------------------------------------------------------/
+
+
+
+
+
+                                      
+###############
+# Définitions #
+###############
+
+[NOYAU]  	Linux est un noyau de la famille UNIX créé en 1991 par Linus Torvalds sous license GNU/GPL (libre / open source)
+
+[OS]	 	GNU/Linux est un OS (combinaison du projet GNU et linux)
+		 Par abus de langage on appel Linux l'OS GNU/Linux
+
+[DISTRIBUTION]	Une distrib est un ensemble de logiciel (souvent libre) assemblés autour du noyaux
+		_Debian
+		 \_Ubuntu
+		  \_Kali
+		_Red Hat
+		 \_Fedora
+		_Gento
+		 \_Chromium OS
+		...
+
+		/!\ Kali est une distribution qui hérite de DEBIAN (les deux utilises apt-get, ...) qui tourne sous l'OS GNU/Linux avec un noyaux Linux de la famille UNIX /!\
+
+[ENVIRONNEMENT]	Interface graphique pour un OS (Bureau, fenetres, barre démarré, ...) (GUI : Graphical User Interface)
+		 GNOME, UNITY, KDE, Xfce, ... (GNOME > all)
+
+[INTERPRETEUR]	Le Shell fait la liaison entre l'utilisateur et le noyaux avec des lignes de commande (CLI : Command Line Interface)
+		BASH, SH, ZSH, CSH, ...
+
+[EDITEUR]	VIM, EMACS, NANO, VI, ... (VIM > all)
+
+[LINUXIEN]	Utilisateur de linux, le plus connu est Richard Stallman (Hacker, créateur du C, GCC, GDB, GNU, EMACS, ...)
+
+[MASCOTTE]	La mascotte de Linux est un manchot (penguin en anglais) nommé TUX (dire que TUX est un pingouin envoi en enfer)
+		La mascotte de GNU est un gnou
+
+[OPEN SOURCE]	Un programme OPEN SOURCE a un code source est accessible à tous
+
+[FREE / LIBRE ] Un programme LIBRE peut etre librement modifié et redistribué (FREE NE VEUT PAS DIRE GRATUIT)
+
+[LICENSE]	Une license défini les droits de partage, de modification et de commercialisation
+		Certaines licenses sont partageables, modifiables et commercialisables
+		Exemple : GNU, CC, MIT
+
+[COMMANDEMENTS]  I    Libre c'est mieux !
+		 II   Un progamme à une tache et doit la remplir au mieux
+		 III  Tout est fichier
+		 IV   RTFM : Read The Fucking Manual
+
+
+
+
+
+############
+# Fichiers #
+############
+
+Un fichier sous Linux peut être :
+_Un fichier
+_Un répertoire
+_Un périphérique
+_Un socket (une connection)
+_Une partition
+_Un programme en cours d’exécution
+_…
+
+
+
+
+###############
+# Répertoires #		(# = les plus utilisés)
+###############
+
+#   /		: Racine du systeme
+#   /bin	: Contient toutes les commandes de base 				(cat, ls, cp ...)
+#   /etc	: Contient la plupart des fichiers de configuration du système
+#   /home	: Contient les répertoires utilisateurs					(/home/user1)
+#   /root	: Contient les répertoires utilisateur de root
+#   /opt	: Contient les dossier des logiciels					(/opt/wireshark)
+#   /tmp	: Contient les fichiers temporaires qui seront supprimé à chaque boot
+#   /usr	: Contient les exécutables des programmes.				(/usr/bin/msfconsole)
+#   /var	: Contient les fichiers de maintenance du système			(/var/log)
+    /lib	: Contient les librairies et les modules du noyau 			(/lib/modules)
+    /media	: Contient les périphériques amovibles					(/media/cdrom)
+    /mnt	: Contient les points de montage temporaire
+    /sbin	: Contient les commandes systèmes réservées aux administrateurs
+    /boot	: Contient les fichiers nécessaires au boot.
+    /proc	: Contient les informations systeme
+    /dev	: Contient des fichiers correspondants à un périphériques		(disques , disquettes …)
+
+Trou noir		: /dev/null
+Envoi des 0 a l'infini  : /dev/zero
+Envoi un num aléatoire  : /dev/random
+Liste des UID (user ID)	: /etc/passwd
+Hash des pass UID	: /etc/shadow (root)
+
+
+
+
+
+##############
+# Raccourcis #
+##############
+
+CTRL + L        Efface les terminal (equivalent de la commande "clear")
+CTRL + C        Stop le programme en cours. Annule la ligne de commande.
+CTRL + Z        Fait passer un programme en arrière plan (ne le stop pas) [jobs et fg pour les reprendre)
+
+
+
+
+
+################
+# Arrière plan #
+################
+
+	& : lance un programme en arrière plan
+mv video.avi lol.avi &			lance la commande "mv video.avi lol.avi" en arrière plan et affiche le PID de la commande (prog ID) en réponse
+
+	nohup : detache la commande lancé de la console (n'arrete pas la commande si on ferme la console)
+nohup video.avi lol.avi			lance la commande "mv video.avi lol.avi" sans qu'elle soit liée à la console
+nohup video.avi lol.avi &		lance la commande "mv video.avi lol.avi" en arrière plan sans qu'elle soit liée à la console
+
+	jobs et fg : gère les programmes en arrière plan
+jobs					liste les programmes en arrière plan et leur numéro
+fg <num>				pour mettre au premier plan le programme (dernier si aucun num précisé)
+
+
+
+
+
+
+#######################
+# Redirection de flux #
+#######################
+
+	PIPE "|" : redirige la sortie de la commande/programme a gauche du pipe dans l'entrée de la commande/programme a droite du pipe
+cat fichier.txt | grep "ligne"		récupère le contenu de "fichier.txt" et l'envoi dans grep pour qu'il recherche la chaine "ligne"
+
+	>>  >  < : redirige la sortie de la commande/programe dans un fichier
+echo "toto" >  fichier.txt		Ecrit toto dans "fichier.txt" (ecrase si existe, créé sinon)
+echo "toto" >> fichier.txt		Ecrit toto a la fin de "fichier.txt" (créé le fichier si il n'existe pas)
+cat < fichier.txt			Envoi le contenu du fichier dans la commande cat (dans l'exemple cela correspond a "cat fichier.txt")
+/!\ Rappel /!\ tout est fichier, on peut rediriger depuis/vers un fichier, un socket, un programme, un link, un périphérique ...
+
+	----------------------------   -----------------------------   -----------------------------
+	Entrée stantard (stdin)[n°0] , Sortie stantard (stdout)[n°1] , Sortie d'erreur (stderr)[n°2]
+	----------------------------   -----------------------------   -----------------------------
+<commande> 1> log.txt			envoie la sortie standard dans "log.txt"
+<commande> 2> log.txt			envoie la sortie d'erreur dans "log.txt"
+<commande> 2> log.txt 1> result		envoie la sortie d'erreur dans "log.txt" et la sortie standard dans "result"
+<commande> 2>&1 | <commande> 		envoie les sorties d'erreur et standat dans la commande suivante
+<commande> 2> /dev/null			envoie la sortie d'erreur dans le TROU NOIR "/dev/null" (les données sont irrécupérables)
+<commande> >  log.txt 2>&1 		envoie les sorties d'erreur et standat dans le fichier "log.txt"
+<commande> >> log.txt 2>&1 		envoie les sorties d'erreur et standat a la fin de "log.txt"
+
+
+
+
+
+##############################
+# Commande dans une commande #
+##############################
+
+	`` (ALT+7 ou ALT+77) : exécute en premier la commande à l'intérieur de ``
+echo "Utilisateur : `id`"	Exécute "id" puis affiche "Utilisateur : root" (si l'user est root)
+
+
+
+
+
+###################
+# Multi commandes #
+###################
+
+	Accumulation de commande
+<commande1> ; <commande2> ; <commande3>		Exécute la "commande1" puis la "commande2" puis la "commande3"
+<commande1> && <commande2> && <commande3>	Exécute la "commande1" puis la suivante si la premiere c'est bien executé sans erreurs etc
+
+
+
+
+
+
+#####################
+# Commandes de base #
+#####################
+
+		--------------
+		INFOS COMMANDE
+		--------------
+
+	MAN : Page de manuel (q: quiter, /: recherche, n: recherche suivante)
+__man <num> <fichier/fonction/commande>
+       1   Programmes exécutables ou commandes de l'interpréteur de commandes (shell)
+       2   Appels système (fonctions fournies par le noyau)
+       3   Appels de bibliothèque (fonctions fournies par les bibliothèques des programmes)
+       4   Fichiers spéciaux (situés généralement dans /dev)
+       5   File formats and conventions, e.g. /etc/passwd
+       6   Jeux
+       7   Divers (y compris les macropaquets et les conventions), par exemple man(7), groff(7)
+       8   Commandes de gestion du système (généralement réservées au superutilisateur)
+       9   Sous-programmes du noyau [hors standard]
+man man			Affiche le manuel de "man"
+man ls			Affiche le manuel de "ls"
+man 3 print		Affiche le manuel de la fonction print en C et C++
+
+
+	WHICH : Affiche l'emplacement d'une commande/fonction/programme
+__which <commande>
+which ls		Affiche le dossier ou se trouve la commande ls
+
+
+
+
+		--------------------
+		GESTION DES FICHIERS
+		--------------------
+
+	PWD : affiche le dossier actuel
+__pwd
+
+
+	LS : Liste le contenu d'un répertoire
+__ls <options> <dossier>
+ls .		liste le dossier actuel
+ls ..		liste le dossier parent
+ls /		liste le dossier racine
+ls ~		liste le dossier personnel
+ls -a		liste les fichiers caché
+ls -l		affichage détaillé
+
+
+	CD : Change directory
+__cd <dossier>
+cd .		se place dans le dossier actuel
+cd ..		se place dans le dossier parent
+cd /		se place dans le dossier racine
+cd ~		se place dans le dossier personnel
+cd -		se place dans le dossier précédent
+
+
+	MV : déplace et/ou rename des fichiers ou répertoire
+__mv <options> <source> <destination>
+mv log log.txt		rename le fichier (ou le répertoire) log en log.txt
+mv /tmp/log.txt .	deplace le fichier dans le répertoire actuel
+mv -f			deplace sans confirmation avant l'écrasement
+mv -i			deplace avec confirmation avant l'écrasement
+mv -u			écrase si le fichier est plus récent que la destination
+mv *.txt ..		deplace tout les fichiers se terminant par ".txt" dans le dossier précédent
+
+
+	CP : copie des fichiers et/ou des répertoires
+__cp <options> <source> <destination>
+cp -R		copie un répertoire avec tout son contenu (dossiers, fichiers et sous-dossiers)
+cp -i		copie avec confirmation avant l'écrasement
+cp -u		écrase si le fichier est plus récent que la destination
+cp -v		affiche l'état de l'opération de la copie (pour voir le % de copie sur les gros fichiers)
+cp *.txt ..	copie tout les fichiers se terminant par ".txt" dans le dossier précédent
+
+
+	RM : supprime les fichiers et/ou les répertoires
+__rm <options> <cible(s)>
+rm -i			efface avec confirmation avant la suppression
+rm -f			efface sans confirmation avant la suppression
+rm -r			efface un répertoire avec tout son contenu (dossiers, fichiers et sous-dossiers)
+rm -rf /		efface tout les fichiers de la machine récursivement sans comfirmation
+rm fichier1 fichier2	efface les fichiers : fichier1 et fichier2
+rm *.txt		efface tout les fichiers se terminant par ".txt"
+
+
+	MKDIR : créé un répertoire vide
+__mkdir <dossier a créer>
+mkdir Documents		créé un répertoire "Documents" dans le dossier actuel
+mkdir Documents/lol	créé un répertoire "lol" dans le dossier "Documents" si il existe
+
+
+
+	LN : création de lien (les liens physiques supprime le fichier en cas de rm, les liens symboliques non)
+__ln <options> <source> <destination>
+ln -s			créé un lien symbolique
+ln -d			créé un lien sur un répertoire
+
+
+
+
+		---------------------
+		RECHERCHE DE FICHIERS
+		---------------------
+
+	LOCATE : recherche de fichier rapide (depuis l'index des fichiers)
+__locate <fichier recherché>
+("updatedb" pour mettre a jour l'index des fichiers)
+
+
+	FIND : recherche de fichier				/!\COMMANDE ULTRA PUISSANTE/COMPLETE/!\
+__find <dossier> <options>
+    -name   : Recherche d'un fichier par son nom
+    -iname  : Même chose que -name mais insensible à la casse
+    -type   : Recherche de fichier d'un certain type
+    -atime  : Recherche par date de dernier accès
+    -mtime  : Recherche par date de dernière modification
+    -link   : Recherche du nombre de liens au fichier
+    -user   : Recherche de fichiers appartenant à l'utilisateur donné
+    -group  : Recherche de fichiers appartenant au groupe donné
+    -exec   : Exécute la commande donnée aux fichiers trouvés
+	{}  = a placer dans la commande pour indiquer les fichiers trouvé par find
+    -ok     : Même chose que -exec mais demande une confirmation
+    -ls     : exécute la commande ls à chaque fichier trouvé
+    -a      : Opérateur ET
+    -o      : Opérateur OU
+    !       : Opérateur NOT
+find /tmp -name core -type f -print	recherche dans "/tmp" des fichiers nommé "core"
+find /tmp -type f,d,l			recherche dans "/tmp" des fichiers, links, dossiers
+find lol/ -user toto -exec rm {}	recherche dans "lol/" les fichiers appartenant à "toto" et les supprimes
+
+
+
+
+		----------------------
+		AFFICHAGE DES FICHIERS
+		----------------------
+
+
+	CAT : affiche le contenu d'un fichier
+__cat <options> <fichier>
+cat *.txt	affiche le contenut des fichiers se terminant par ".txt"
+cat -n		affiche les lignes
+cat -e		affiche les caractères spéciaux (tabulations, fin de ligne, ...)
+
+	TAC :  affiche le contenu d'un fichier en partant du bas vers le haut
+__tac <options> <fichier>
+
+	MORE :  Affiche un fichier page par page
+__more <fichier>
+
+	LESS : Affiche un fichier a la maniere de MAN
+__less <fichier>
+
+	HEAD : Affiche les premieres lignes d'un fichier
+__head <options> <fichier>
+-n		nombre de lignes à afficher
+
+	TAIL : Affiche les dernieres lignes d'un fichier
+__tail <options> <fichier>
+-n		nombre de lignes à afficher
+
+
+
+
+
+		-----------------------------------
+		TRAITEMENT DES CHAINES DE CARACTERE
+		-----------------------------------
+
+
+	GREP : recherche une chaine de caractères		/!\COMMANDE ULTRA PUISSANTE/COMPLETE/!\
+__grep <options> <patterns/regex> <file>
+    -c : Retourne le nombre de lignes au lieu des lignes elles-mêmes
+    -n : Retourne les lignes préfixées par leur numéro
+    -i : Insensible à la casse (osef des majuscules)
+    -e : permet de spécifier plusieurs patterns
+    -E : permet d'utiliser les regexs
+    -r : Recherche récursivement dans tous les sous-répertoires
+    -v : Recherche les lignes qui ne contiennent pas le pattern
+grep "psg" test.txt			recherche "psg" dans test.txt
+grep -E "(paris|vosges)" map.txt	recherche les lignes contenant "paris" OU "vosges" dans "map.txt"
+grep "es$" map.txt			... termine par "es" 
+grep "^06" map.txt			... commence par "06"
+grep '..' map.txt			recherche les lignes avec au moins 2 caractères (.)
+grep 'a*_' map.txt			recherche les lignes contenant une chaine avec un "a" puis des caractères puis "_" (ex:abc_)
+grep -F '..' map.txt			recherche ".." dans map.txt
+grep -E -x '[0-9]+'			recherche les lignes avec que des chiffres
+grep -E '^[0-9]+$'			recherche les lignes avec que des chiffres (sans -x)
+
+
+	SED : traite/modifie les chaines de caractères (généralement a utiliser après un pipe "|")	/!\COMMANDE ULTRA PUISSANTE/COMPLETE/!\
+__sed <options> <regex>
+sed -e "s/+/_/g"			Remplace tout les "+" par des "_" 
+sed -e "s|dos/file|new/prog|g"		Remplace "dos/file" par des "new/prog" (pour éviter que les "/" soit pris en compte)
+
+
+	CUT : traite/modifie les chaines de caractères (généralement a utiliser après un pipe "|")	/!\COMMANDE ULTRA PUISSANTE/COMPLETE/!\
+__cut <options>
+cut -d'%' -f1 			Découpe une chaine avec "%" comme délimiteur et affiche la premiere partie
+cut -d'x' -f2 			Découpe une chaine avec "x" comme délimiteur et affiche la seconde partie
+
+
+	AWK : traite/modifie les chaines de caractères (généralement a utiliser après un pipe "|")	/!\COMMANDE ULTRA PUISSANTE/COMPLETE/!\
+_awk <options> <chaine>
+awk '{print $1}'		Affiche la premiere colone
+ls -l | awk '{print $1}'	Affiche la premiere colone de la commande ls (uniquement les droits utilisateur ex: drwxr-xr-x)
+awk 'NR == 17'			Affiche la 17eme ligne
+awk 'NR >= 10 && NR <= 30'	Affiche les lignes de 10 à 30
+
+
+
+
+
+
+		------------------
+		GESTION DES DROITS
+		------------------
+
+
+	CHMOD : Modifie les droits d'un fichier/dossier si on est le propriétaire ou le root
+_chmod <droits> <fichier>
+    + : Ajoute une permission
+    - : Enlève une permission
+    = : Autorise uniquement l'autorisation indiquée
+    r : Lecture ; Valeur octale 4
+    w : Écriture ; Valeur octale 2
+    x : Exécution ; Valeur octale 1
+    s : Utilise les droits du propriétaire ou du groupe lors de l'exécution
+    u : Propriétaire du fichier
+    g : Groupe propriétaire du fichier
+    o : Tous les autres utilisateurs
+   -R : Récursif, modifie les autorisations d'un répertoire et tout ce qu'il contient
+chmod 777 prog.exe		donne tout les droits (x + w + r) a "prog.exe"
+chmod +x prog.xxe		donne les droits d'execution au propriétaire, au groupe du propriétaire et aux autres
+
+
+	CHOWN : Modifie le propriétaire et le groupe propriétaire d'un fichier
+_chown <proprio>:<group> <fichier>
+chown -R toto dossier/		modifie le propriétaire d'un répertoire et tout ce qu'il contient
+chown nk:nk log.txt		rends l'user "nk" et le groupe "nk" proprio de "log.txt"
+chown toto log.txt		rends l'user "toto" proprio de "log.txt"
+
+
+	CHGRP : Modifie uniquement le groupe propriétaire d'un fichier
+_chgrp <group> <fichier>
+chgrp -R toto dossier/		modifie le groupe propriétaire du répertoire et tout ce qu'il contient
+chgrp toto log.txt		rends le groupe "toto" proprio de "log.txt"
+
+
+	SUDO : Exécute une commande/programme avec des droits supplémentaires (droits root ou ceux d'un autre user)
+_sudo <options> <commande>
+sudo -l			affiche les droits définit (les droits sont définit par le root, par défaut aucun droits suplémentaires)
+sudo ls			exécute "ls" avec les droits root (root par défaut si on ne définit pas un utilisateur)
+sudo -u toto ls		exécute "ls" avec les droits de l'utilisateur toto (si on a les droits sudo pour)
+
+
+	VISUDO : Pour définire les droits sudo
+
+
+	SU : changer d'utilisateur
+_su <user>
+su toto		Se connecte en tant que "toto"
+su root		Se connecte en tant que "root"
+su		Se connecte en tant que "root" (root par défaut)
+
+
+
+
+		------------------
+		INSTALL & DOWNLOAD
+		------------------
+
+
+	APT-GET : Permet l'install/uninstall des paquets (programme)
+_apt-get <options> <paquets>
+update		Met à jour la liste des paquets disponibles en fonction des sources fournies.
+upgrade		Met à jour tous les paquets déjà installés.
+dist-upgrade	Pareil ​à upgrade ​mais permet ​en plus de passer à une version ​supérieure du noyau et de certains paquets.
+install		Installe un ou plusieurs paquets.
+remove		Supprime un ou plusieurs paquets.
+clean		Efface du système ​les installateurs,​ sans désinstaller de paquets
+-f		Utilisée avec install ou remove cette option permet de réparer un système dont les dépendances sont défectueuses.
+-s		Fait une simulation des actions à mener sans rien toucher au système.
+-y		Répond automatiquement oui à toutes les questions.
+-u		Affiche les paquets mis à jour.
+--purge		À utiliser conjointement avec remove pour supprimer tout ce qui peut l'​être (fichiers de configuration par exemple).
+--reinstall	Réinstaller les paquets avec leur version plus récente
+
+
+	WGET : Télécharge une page/fichier depuis une url 
+_wget <options> <url>
+wget "http://www.free.fr/index.html"		Télécharge "index.html" sur le site "http://www.free.fr"
+
+
+
+
+	Processus & ram
+	---------------
+kill		Tue (alt+F4) un processus précis par son PID (prog id)
+killall		Tue les processus par leur nom
+ps		Affiche les processus en cours
+top		Affiche les processus en cours, la ram, le cpu, ... en mode moniteur (comme le gestionnaire de taches alt+ctrl+sup)
+free		Affiche les infos sur la ram
+
+	Info kernel
+	-----------
+uname -a	Affiche des informations sur le système.
+lsb_release -a	Affiche des informations sur la distribution (ex kali).
+
+
+	Users & groups
+	--------------
+id		Affiche l'id user et l'id group
+whoami		Affiche le nom de l'user
+groups		Affiche les groupes de l'users
+adduser		Ajoute un user
+addgroup	Ajoute un group
+deluser		Del un user
+delgroup	Del un group
+usermod		Modifie les paramètres d'un compte utilisateur.
+passwd		Change le mot de passe
+
+	Périphériques
+	-------------
+lspci		Liste tous les périphériques PCI
+lsusb		Liste tous les périphériques USB
+lshw		Liste tous les périphériques
+
+	Réseaux
+	-------
+ifconfig	Information des cartes réseaux
+iwconfig	Information des cartes wifi
+netstat		Informations sur les connexions réseau
+netdiscover	Detecte les IP sur un réseau grace aux requetes ARP
+nslookup	Résolution des noms de domaine
+dig		Résolution des noms de domaine
+ss		Les ports TCP/UDP IPv4/IPv6 à l'écoute
+tcpdump		Capture des paquets
+ping		Lance des requetes ping
+traceroute	Détecter les routeurs entre la station d’origine et une destination.
+dhclient 	Client DHCP
+
+
+	Partitions
+	----------
+mount		Monte une partition/partition_réseau/...
+umount		Demonte une partition
+
+	Fichiers
+	--------
+file		Permet d'identifier le type de fichier
+diff		Cherche les différences entre deux fichiers
+strings		Affiche les chaines de caractères d'un fichier (parfait sur un binaire)
+readelf		Affiche les infos sur les fichier ELF (sorte de binaire)
+objdump		Désassemble un binaire
+gdb		Débugger
+wc		Compte les caracteres (-c), les mots (-w) et les lignes (-l)
+
+	Taille dossier/disque
+	---------------------
+du		Affiche l'espace disque utilisé par les fichiers et/ou les répertoires (peut etre utiliser dans un répertoire)
+df		Affiche la quantité d'espace disque utilisée par les partitions
+
+	Divers
+	------
+export		Assigner des valeurs aux variables d'environnement (PATH, LANG, ...)
+crontab		Gestionnaire de taches planifiés
+vim		Editeur de fichier
+data		Affiche la date et/ou l'heure
+
+
+
+
+
+
+
+
+
+

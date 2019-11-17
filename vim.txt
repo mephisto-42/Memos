@@ -1,0 +1,58 @@
+L'Éditeur vi
+
+
+
+
+• Démarrer l'éditeur  				vi nom_du_fichier_à_éditer
+• Ouvrir un fichier				:e nom_du_fichier
+• Sauvegarder un fichier 			:w nom_du_fichier
+• Quitter l'éditeur et sauvegarde 		:x
+• Quitter sans sauvegarder  			:q!
+
+
+ a	ajoute du texte à la droite du curseur 		(bascule en mode insertion)
+ i	insère du texte à la gauche du curseur 		(bascule en mode insertion)
+ o	intercale une ligne vide au­dessous du curseur 	(bascule en mode insertion)
+ O	intercale une ligne vide au­dessus du curseur	(bascule en mode insertion)
+
+
+ 0	se positionne au début de la ligne 
+ $	se positionne àla fin de la ligne 
+
+
+ ^f (CTRL+f)	avance d'un écran 
+ ^b (CTRL+b)	recule d'un écran Pour aller à une ligne en particulier : 
+ :<num>		positionne le curseur à la ligne <num>
+ 1G ou g	positionne le curseur au debut du fichier
+ G		positionne le curseur à la dernière ligne du fichier
+
+
+ <num>dd	supprime <num> lignes à partir de la ligne courante et place dans le tampon (supprime et copie)
+ yy		copie la ligne courante dans le tampon 
+ <num>yy	copie <num> lignes consécutives dans le tampon 
+ p		insère le contenu du tampon à la droite du curseur (colle)
+
+
+ .		repète la dernière commande
+ u 		annule la dernière commande 
+ ^r (CTRL+r)	annule la derniere annulation
+
+ 
+ /<chaîne>	cherche <chaîne> en avançant vers la fin du fichier
+ n		trouve la prochaine occurrence de la dernière chaîne recherchée. 
+
+
+ :s/ceci/cela/<options>		substitue la première occurrence dececi par cela dans laligne courante
+				l'option g substitue toutes les occurrences dans la ligne courante
+				l'option c demande de confirmer la substitution
+ :3,9s/ceci/cela		remplace aux lignes 3 à 9 la première occurence de ceci par cela.
+ :%s/ceci/cela			remplace dans tout le fichier la première occurence de ceci par cela
+ :%s/ceci/cela/g		remplace dans tout le fichier toutes les occurences de ceci par cela
+
+
+ ~				change la casse (majuscules/minuscules) d'une lettre 
+ J				joint la ligne courante à la suivante 
+
+
+ :set nu		affiche les numéros de lignes 
+ :set syntax on		active la coloration en fonction de l'extension du fichier

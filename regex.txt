@@ -1,0 +1,36 @@
+
+
+ ^				marque le début d'une chaîne(voir classe aussi)
+ $				marque la fin d'une chaîne
+ ^chat$				reconnaît chat seul
+ ^$				reconnaît chaîne vide
+ |				marque l'alternative (OU)
+ L[y|i]s			reconnaît Lys ou Lis
+ ^(De|Sujet|Date):@		reconnaît tout ce qui commence par De:@ ou Sujet:@ ou Date:@
+ ?				zéro ou une occurrence
+ *				zéro, une ou plusieurs occurrences
+ +				une ou plusieurs occurrences
+ {x}accolade + nombre		doit apparaître exactement x fois
+ {x,}accolade + nombre		doit apparaître au moins x fois
+ {x,y}accolade + nombre		doit apparaître exactement x fois et maximum y fois
+ [ ]				indique une classe
+ -				indique l'intervalle dans une classe
+ [a-z]				reconnaît les lettres de a à z
+ [Yy]ves			un mot avec ou sans majuscule
+ [^... ]			reconnaît tout caractère qui n'est pas énuméré
+ [^0-9]				reconnaît tout ce qui n'est pas des chiffres
+ [^1-6]				reconnaît tout sauf les chiffres de 1 à 6
+ .				Any single character
+\s				Any whitespace character
+\S				Any non-whitespace character
+\d				Any digit
+\D				Any non-digit
+\w				Any word character (letter, number, underscore)
+\W				Any non-word character
+\b				Any word boundary character
+
+
+
+
+
+
