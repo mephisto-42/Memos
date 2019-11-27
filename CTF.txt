@@ -1,13 +1,21 @@
+	   ________________________________________________
+	  /						   \
+	 /      Gare aux <Rabbit Hole> (fausses pistes)     \
+	/    Prendre des notes sur toutes les découvertes    \
+	\____________________________________________________/
 
-	I   Scan de ports
 
-	II  Recherche d'exploit
+		I   Scan de ports
 
-	III Elévation de privilège
+		II  Recherche d'exploit
+	
+		III Elévation de privilège
 
 
-SITE WEB:
----------
+
+	SITE WEB
+	--------
+
 
 1) Checker => code source
 	      robots.txt
