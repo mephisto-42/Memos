@@ -1,0 +1,28 @@
+
+	I   Scan de ports
+
+	II  Recherche d'exploit
+
+	III Elévation de privilège
+
+
+SITE WEB:
+---------
+
+1) Checker => code source
+	      robots.txt
+	      sitemap.xml
+
+2) Nikto --url [http://URL]
+
+3) Dirb [http://URL] [DICO] 
+dico => /usr/share/dirb/wordlists/big.txt
+	/usr/share/dirb/wordlists/common.txt
+
+4) (WORDPRESS) wpscan --url [http://URL_WORDPRESS] --detection-mode aggressive
+
+5) Rechercher Faille LFI/RFI
+
+6) Rechercher Faille d'upload de fichier
+
+7) Rechercher Faille SQLi
