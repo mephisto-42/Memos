@@ -34,3 +34,21 @@ dico => /usr/share/dirb/wordlists/big.txt
 6) Rechercher Faille d'upload de fichier
 
 7) Rechercher Faille SQLi
+
+8) Brute force d'authentification
+wfuzz -c -z file,[DICO] -d "user=admin&pass=FUZZ" [http://URL]
+(la variable FUZZ est brute-forcé avec le DICO)
+puis rajouter => --hw [NUM] <= pour filtrer les réponses n'ayant pas NUM mots
+	
+
+
+
+
+	ASTUCES
+	-------
+
+Prendre en compte les indices
+Décoder plusieurs fois les encodages (Base64, ...)
+Certaines actions débloquent des choses (services, modifications de pages web, ...)
+
+
