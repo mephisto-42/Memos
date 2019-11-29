@@ -13,15 +13,23 @@ _Sténographie  => dissimulation de msg
 
 On peut dire:
 -------------
-Chiffrer et Déchiffrer
-Crypter  et Décrypter
-Décoder mais pas coder (ou codage)
+Chiffrer
+Déchiffrer
+Chiffrement
+Décrypter
 
-On chiffre un msg en clair  avec une clef et on obtient un msg chiffré
+On ne dit pas:
+--------------
+Crypter   (Aucun sens)
+Cryptage  (Aucun sens)
+Encrypter (Anglais)
+Chiffrage (Therme utilisé dans le domaine de l'économie)
+
+On chiffre  un msg en clair avec une clef et on obtient un msg chiffré
 On déchiffre un msg chiffré avec une clef et on obtient un msg en clair
-On décode    un msg chiffré SANS la  clef et on obtient un msg en clair (B-F ...)
+On décrypte  un msg chiffré SANS la  clef et on obtient un msg en clair (B-F ...)
 
-Coder un msg en clair reviendrai a chiffrer sans connaitre la clef
+Crypter un msg en clair reviendrai a chiffrer sans connaitre la clef
 Ce qui n'a aucun sens !
 
 
