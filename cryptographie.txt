@@ -29,9 +29,11 @@ On chiffre  un msg en clair avec une clef et on obtient un msg chiffré
 On déchiffre un msg chiffré avec une clef et on obtient un msg en clair
 On décrypte  un msg chiffré SANS la  clef et on obtient un msg en clair (B-F ...)
 
-Crypter un msg en clair reviendrai a chiffrer sans connaitre la clef
-Ce qui n'a aucun sens !
-
+Crypter un msg en clair reviendrait a chiffrer sans connaitre la clef, ce qui n'a aucun sens !
+_Ca voudrait dire qu'on chiffre avec une clef aléatoire puis on jète la clef
+ * autant effacer directement ca prendra moins de place
+_Ou que l'on chiffre sans clef
+ * ce qui revient a ne pas chiffrer et donc a ne rien faire
 
 
 Type de chiffremet :
@@ -39,6 +41,8 @@ Type de chiffremet :
 
 _Hash
 _chiffrement symétrique
+ * chiffrement symétrique par bloc
+ * chiffrement symétrique par flux (stream)
 _chiffrement asymétrique
 
 
@@ -124,7 +128,7 @@ On parle plutot de difficulté au lieu d'impossibilité
 Fontions de hachage:
 --------------------
 _MD5   (1991)	Tout pourri, a éviter
-_SHA-1 (1995)	Commence à monter quelques faiblaisses (prononcé "sha one")
+_SHA-1 (1995)	Commence à montrer quelques faiblaisses (prononcé "sha one")
 _SHA-2 (2002)	Robuste (prononcé "sha two")
  * sha256
  * sha512
