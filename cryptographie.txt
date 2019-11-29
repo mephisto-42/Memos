@@ -1,0 +1,167 @@
+msg	= message
+B-F	= brute force
+atm	= pour l'instant
+
+
+
+_Cryptographie => chiffrement de msg
+_Sténographie  => dissimulation de msg 
+ * Une communication entre prisoniés qui ne sont pas sensés communiquer
+ * Un agent secret qui veut transmettre des données sans alerter
+
+
+
+On peut dire:
+-------------
+Chiffrer et Déchiffrer
+Crypter  et Décrypter
+Décoder mais pas coder (ou codage)
+
+On chiffre un msg en clair  avec une clef et on obtient un msg chiffré
+On déchiffre un msg chiffré avec une clef et on obtient un msg en clair
+On décode    un msg chiffré SANS la  clef et on obtient un msg en clair (B-F ...)
+
+Coder un msg en clair reviendrai a chiffrer sans connaitre la clef
+Ce qui n'a aucun sens !
+
+
+
+Type de chiffremet :
+--------------------
+
+_Hash
+_chiffrement symétrique
+_chiffrement asymétrique
+
+
+
+
+
+		###########
+		# LE HASH #
+		###########
+
+
+
+Fonctions de hachage:
+---------------------
+
+Fonction mathématique à sens unique
+F(X) = Y
+La fonction de chiffrement F appliqué sur X donne Y
+En partant de Y il est "impossible" de retrouver X
+
+L'entrée (X) peut etre de n'importe quel longueur
+La sortie (Y) aura une taille fixe
+
+
+
+Exmeples:
+---------
+
+echo "Hello" | openssl sha256
+(stdin)= 66a045b452102c59d840ec097d59d9467e13a3f34f6494e539ffd32c1bb35f18
+
+echo "Hello word" | openssl sha256
+(stdin)= e0a346a568c1e5724f977ec5d4b928083b527d5ec7cf9f7ea1fa7a1d1ea7ba1d
+
+echo "Hello Word" | openssl sha256
+(stdin)= f009242c71a06f0a0f5aa046cd0176fb02f8e30d0dc9c958749b3167dc5695e8
+
+
+
+Caractéristique d'une fonction de hash:
+---------------------------------------
+
+_Le hash doit etre unique
+ * Impossible en pratique
+ * Ensemble S vers N avec card(S) > card(N)
+ * Donc collision (deux entrées différentes peuvent avoir la meme sortie)
+   f(X1) = Y  et  f(X2) = Y
+_Les collisions sont "impossible" a calculer
+_Il est "impossible" de calculer un message d'origine
+_Il est "impossible" de déterminer un message d'origine
+ * Avec Y on ne peut déterminer si le msg d'origine est X1 ou X2
+_Deux msg très proches donnent des hash très différents (CF: hello word)
+
+
+
+Utilité:
+-------
+Les fonctions de hachage peuvent servir a calculer une empreinte numérique
+et stocker des mdp de manière sécurisée
+...
+
+
+
+"Impossible":
+-------------
+_Aspect théorique	ce qu'on reve d'avoir
+_Aspect pratique	la réalité
+
+Aspect théorique != aspect pratique
+
+_Dans la théorie il est impossible de déchiffrer un hash
+ * Les fonctions mathématiques utilisés sont incassable
+ * Brute-forcer demanderai trop de temps avec nos ordis
+_Dans la pratique:
+ * Les fonctions mathématiques utilisés ont peut etre des failles (inconnu atm)
+ * Les ordinateurs futurs auront peut etre la puissance nécessaire pour B-F
+
+On parle plutot de difficulté au lieu d'impossibilité
+(a échelle humaine avec les moyens actuel il est difficile de casser un hash)
+
+
+
+Fontions de hachage:
+--------------------
+_MD5   (1991)	Tout pourri, a éviter
+_SHA-1 (1995)	Commence à monter quelques faiblaisses (prononcé "sha one")
+_SHA-2 (2002)	Robuste (prononcé "sha two")
+ * sha256
+ * sha512
+ * sha384
+ * sha224
+_Et d'autres ...
+
+
+
+Le sel (salt):
+--------------
+Le sel cryptographique est une méhtode consistant a rajouter dans données
+dans le msg a chiffrer pour amélioré la robustesse du chiffrement.
+Le sel peut etre:
+_statique	la donnée ajoutée sera toujours la meme
+_dynamique	la donnée ajoutée changera pour chaque chiffrement
+Si le sel statique est découvert par l'attaquant il n'aura aucune utilité
+Le sel dynamique rend très compliquer le brute force
+
+
+
+Enchainer les fonctions de hash n'augmente pas la sécurité
+Enchainer les fonctions de hash avec du sel dynamqie augmente la sécurité
+exemples:
+
+ md5(md5(md5(MOT_DE_PASSE_1)))
+ md5(md5(md5(MOT_DE_PASSE_2)))
+Ne sont pas sécurisés (surtout avec du md5)
+
+ md5(MOT_DE_PASSE_1 + SEL_statique)
+ md5(MOT_DE_PASSE_2 + SEL_statique)
+Sont sécurisés (suffisant pour un site web, hormis le md5)
+
+
+ md5( md5( MOT_DE_PASSE_1 + SEL1 ) + SEL2)
+ md5( md5( MOT_DE_PASSE_2 + SEL3 ) + SEL4)
+Sont bien plus sérurisés (le sel utilisé n'est jamais le meme)
+
+
+
+
+
+
+
+
+
+
+
